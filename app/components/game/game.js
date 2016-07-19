@@ -11,12 +11,12 @@
     // This is a freebie we are using the GameService to help keep our controller clean. The GameServie will be in charge of creating and shuffling the deck.
     gc.deck = GameService.getDeck()
 
-    var cardOne;
-    var cardTwo;
+    var cardOne = null;
+    var cardTwo = null;
 
     gc.flipped = 0;
     gc.pairs = 0;
-    gc.victory = true;
+    gc.victory = false;
 
 
     // Create two card variables. These will be responsible
@@ -29,7 +29,33 @@
     // for variable names
 
     gc.selectCard = function(card) {
+      if(card.show || cardOne && cardTwo) {
+        return;
+      }
+
       card.show = true;
+      if(!cardOne) {
+        cardOne = card;
+      }
+
+      else {
+        cardTwo = card;
+
+        if(gc.isMatch()) {
+          gc.pairs ++;
+          gc.flipped ++;
+          gc.resetCards();
+          return;
+        } else { $timeout(function() {
+          cardOne.show = false;
+          cardTwo.show = false;
+          gc.resetCards();
+          }, 1000)
+
+            return;
+        }
+      }
+
     }
 
     
@@ -39,24 +65,44 @@
     // After you complete this refer back to readme.md
 
     gc.resetCards = function() {
-      cardOne.show = false;
-      cardTwo.show = false;
-      cardOne = {};
-      cardTwo = {};
-      flipped ++
+      cardOne = null;
+      cardTwo = null;
+      gc.flipped ++;
     };
 
     // Write a local resetCards function that will empty our card variables
     // and increase the number of attempts
 
-    gc.isMatch = function(cardOne, cardTwo) {
+    gc.isMatch = function() {
 
+      if(cardOne.title == cardTwo.title) {
+        return true;
+
+      } else {
+        return false;
+      }
+    //     gc.pairs ++;
+    //     gc.flipped ++;
+    //     cardOne = null;
+    //     cardTwo = null;
+    //     return;
+    //   } else { $timeout(function() {
+    //     gc.resetCards();
+    //   }, 2000)
+    //   }
     }
 
     // Next write a local isMatch function that accepts our two cards and if the card titles 
     // match, increases our totalMatches and returns true else returns false. After this refer 
     // back to readme.md
 
+  function checkVictory() {
+  if(gc.pairs == gc.deck.length*0.5) {
+    gc.victory = true;
+  }
+  }
+
+  checkVictory();
     // Finally, write a local checkVictory function that will set gc.victory = true if the totalMatches 
     // is half the length of the deck. Tip: the game deck array is available at gc.deck. When you're done
     // refer back to readme.md
