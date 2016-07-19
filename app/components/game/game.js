@@ -11,6 +11,14 @@
     // This is a freebie we are using the GameService to help keep our controller clean. The GameServie will be in charge of creating and shuffling the deck.
     gc.deck = GameService.getDeck()
 
+    var cardOne;
+    var cardTwo;
+
+    gc.flipped = 0;
+    gc.pairs = 0;
+    gc.victory = true;
+
+
     // Create two card variables. These will be responsible
     // for keeping track of our selections as we click cards.
 
@@ -20,12 +28,30 @@
     // victory boolean to let our controller know if we've won. Refer to the index.html
     // for variable names
 
+    gc.selectCard = function(card) {
+      card.show = true;
+    }
+
+    
+
     // Next write a selectCard function on gc that accepts a card object on click and
     // let's make it set card.show to true (boolean). Give it a test!
     // After you complete this refer back to readme.md
 
+    gc.resetCards = function() {
+      cardOne.show = false;
+      cardTwo.show = false;
+      cardOne = {};
+      cardTwo = {};
+      flipped ++
+    };
+
     // Write a local resetCards function that will empty our card variables
     // and increase the number of attempts
+
+    gc.isMatch = function(cardOne, cardTwo) {
+
+    }
 
     // Next write a local isMatch function that accepts our two cards and if the card titles 
     // match, increases our totalMatches and returns true else returns false. After this refer 
