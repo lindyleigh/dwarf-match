@@ -28,7 +28,7 @@
     // victory boolean to let our controller know if we've won. Refer to the index.html
     // for variable names
 
-    gc.selectCard = function(card) {
+   gc.selectCard = function(card) {
       if(card.show || cardOne && cardTwo) {
         return;
       }
@@ -57,8 +57,6 @@
       }
 
     }
-
-    
 
     // Next write a selectCard function on gc that accepts a card object on click and
     // let's make it set card.show to true (boolean). Give it a test!
